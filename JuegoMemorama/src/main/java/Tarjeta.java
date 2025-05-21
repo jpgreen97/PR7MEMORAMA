@@ -1,12 +1,16 @@
-package com.ejercicios.juegomemorama;
-
 import javax.swing.*;
 
 public abstract class Tarjeta {
+    private String nombre;
     private boolean descubierta;
 
-    public Tarjeta() {
+    public Tarjeta(String nombre) {
+        this.nombre = nombre;
         this.descubierta = false;
+    }
+
+    public String getNombre() {
+        return nombre;
     }
 
     public boolean estaDescubierta() {
@@ -17,5 +21,5 @@ public abstract class Tarjeta {
         descubierta = !descubierta;
     }
 
-    public abstract ImageIcon getImagen(); // imagen para mostrar en la GUI
+    public abstract Icon getImagen(); // Imagen específica por tipo
 }
