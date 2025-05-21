@@ -13,11 +13,6 @@ public class TarjetaBandera extends Tarjeta {
         return continente;
     }
 
-//    @Override
-//    public Icon getImagen() {
-//        return null;
-//    }
-
      @Override
      public Icon getImagen() {
         
@@ -36,7 +31,7 @@ public ImageIcon redimensionarImagen(String ruta, int ancho, int alto) {
     return new ImageIcon(imagenRedimensionada);
 }
 
-    //public String descripcionDetallada() {
-      //  return "Bandera de " + getNombre() + " (" + continente + ")";
-    //}
+    public String descripcionDetallada() {
+        return "Bandera de " + getNombre() + " (" + continente + ")";
+    }
 }

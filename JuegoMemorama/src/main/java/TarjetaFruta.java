@@ -12,11 +12,6 @@ public class TarjetaFruta extends Tarjeta {
     public boolean esCitrica() {
         return esCitrica;
     }
-//
-//    @Override
-//    public Icon getImagen() {
-//        return null;
-//    }
 
     @Override
     public Icon getImagen() {
@@ -30,7 +25,7 @@ public class TarjetaFruta extends Tarjeta {
             .getScaledInstance(ancho, alto, Image.SCALE_SMOOTH);
     return new ImageIcon(imagenRedimensionada);
 }
-    //public String descripcionDetallada() {
-        //return "Fruta: " + getNombre() + (esCitrica ? " (cítrica)" : " (no cítrica)");
-    //}
+    public String descripcionDetallada() {
+        return "Fruta: " + getNombre()+ (esCitrica ? " (cítrica)" : " (no cítrica)");
+    }
 }

@@ -2,7 +2,7 @@ import java.awt.Image;
 import javax.swing.*;
 
 public class TarjetaFigura extends Tarjeta {
-    private String tipoFigura; // nuevo atributo
+    private String tipoFigura; 
 
     public TarjetaFigura(String nombre, String tipoFigura) {
         super(nombre);
@@ -29,7 +29,7 @@ public ImageIcon redimensionarImagen(String ruta, int ancho, int alto) {
     return new ImageIcon(imagenRedimensionada);
 }
 
-   // public String descripcionDetallada() {
-        //return "Figura: " + getNombre() + " (" + tipoFigura + ")";
-   // }
+    public String descripcionDetallada() {
+        return "Figura: " + getNombre() + " (" + tipoFigura + ")";
+    }
 }

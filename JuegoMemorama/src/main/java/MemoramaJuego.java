@@ -152,7 +152,7 @@ public class MemoramaJuego extends JFrame {
     private List<Tarjeta> generarTarjetas() {
         List<Tarjeta> lista = new ArrayList<>();
         String[] nombres = {"uno", "dos", "tres", "cuatro", "cinco", "seis"}; 
-
+        
         for (String nombre : nombres) {
             for (int i = 0; i < 2; i++) {
                 Tarjeta t = switch (tipoTarjeta) {
