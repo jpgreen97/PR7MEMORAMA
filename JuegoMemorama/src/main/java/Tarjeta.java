@@ -1,7 +1,7 @@
 import javax.swing.*;
 
 public abstract class Tarjeta {
-    private String nombre;
+    protected String nombre;
     private boolean descubierta;
 
     public Tarjeta(String nombre) {
@@ -21,5 +21,10 @@ public abstract class Tarjeta {
         descubierta = !descubierta;
     }
 
-    public abstract Icon getImagen(); // Imagen específica por tipo
+    public abstract Icon getImagen(); 
+    
+    public abstract String getInformacion();
+    
+    public abstract void efectoEspecial(Jugador jugador); 
+
 }

@@ -22,6 +22,7 @@ public class MemoramaJuego extends JFrame {
     private JPanel panelInfo;
     private JLabel lblTurno;
     private JLabel[] lblPuntosJugadores;
+    private JLabel lblInformacionHerencia;
 
     public MemoramaJuego(String tipoTarjeta, int numJugadores) {
         this.tipoTarjeta = tipoTarjeta;
@@ -55,8 +56,11 @@ public class MemoramaJuego extends JFrame {
             panelTablero.add(boton);
         }
 
-         panelInfo = new JPanel(new GridLayout(1, numJugadores + 1));
+         panelInfo = new JPanel(new GridLayout(2, numJugadores + 1));
         panelInfo.setBorder(BorderFactory.createTitledBorder("Informacion del Juego"));
+        
+        lblInformacionHerencia = new JLabel("Selecciona una tarjeta", SwingConstants.CENTER);
+        panelInfo.add(lblInformacionHerencia);
         
         lblTurno = new JLabel("Turno: " + jugadores.get(turnoActual).getNombre(), SwingConstants.CENTER);
         panelInfo.add(lblTurno);
@@ -74,6 +78,8 @@ public class MemoramaJuego extends JFrame {
 
     private void manejarSeleccion(int index, JButton boton) {
         Tarjeta tarjeta = tarjetas.get(index);
+        
+        lblInformacionHerencia.setText(tarjeta.getInformacion());
 
         if (tarjeta.estaDescubierta() || boton == botonSeleccionado1) return;
 
@@ -83,9 +89,12 @@ public class MemoramaJuego extends JFrame {
         if (tarjetaSeleccionada1 == null) {
             tarjetaSeleccionada1 = tarjeta;
             botonSeleccionado1 = boton;
+            lblInformacionHerencia.setText("Selecciona otra tarjeta"); 
         } else {
             tarjetaSeleccionada2 = tarjeta;
             botonSeleccionado2 = boton;
+            lblInformacionHerencia.setText("Verificando tarjeta."); // Feedback inmediato
+
 
             Timer timer = new Timer(250, e -> verificarPareja());
             timer.setRepeats(false);
@@ -97,17 +106,28 @@ public class MemoramaJuego extends JFrame {
         if (tarjetaSeleccionada1.getNombre().equals(tarjetaSeleccionada2.getNombre())) {
             jugadores.get(turnoActual).sumarPunto();
             
+            Jugador jugadorActual = jugadores.get(turnoActual);
+
+            //jugadorActual.sumarPunto();
+            
+            tarjetaSeleccionada1.efectoEspecial(jugadorActual);
+
+            // Mostrar información del par encontrado
+        String infoPar = tarjetaSeleccionada1.getInformacion();
+        lblInformacionHerencia.setText(infoPar);
+        
+            
              lblPuntosJugadores[turnoActual].setText(
                 jugadores.get(turnoActual).getNombre() + ": " + 
                 (jugadores.get(turnoActual).getPuntos() * 5) + " pts"
             );
-             
         } else {
             tarjetaSeleccionada1.voltear();
             tarjetaSeleccionada2.voltear();
             botonSeleccionado1.setIcon(redimensionarImagen("imagenes/reverso.jpeg", 180, 180));
             botonSeleccionado2.setIcon(redimensionarImagen("imagenes/reverso.jpeg", 180, 180));
             turnoActual = (turnoActual + 1) % numJugadores;
+            lblInformacionHerencia.setText("Intenta de nuevo"); 
             lblTurno.setText("Turno: " + jugadores.get(turnoActual).getNombre());
 
         }
@@ -151,19 +171,55 @@ public class MemoramaJuego extends JFrame {
 
     private List<Tarjeta> generarTarjetas() {
         List<Tarjeta> lista = new ArrayList<>();
-        String[] nombres = {"uno", "dos", "tres", "cuatro", "cinco", "seis"}; 
+        String[] nombresFiguras = {"cuadrado" , "rectangulo" ,"circulo" , "rombo" , "ovalo" , "pentagono"};
+        String[] nombresBanderas = { "mexico" , "panama" , "elsalvador" , "venezuela" , "brasil" , "uruguay" }; 
+        String [] nombresFrutas = {"calabaza" , "chile" , "limon" , "manzana" ,"kiwi" , "melon" };
         
-        for (String nombre : nombres) {
+        if(tipoTarjeta.equals("Figuras"))
+        {
+            
+        for (String nombre : nombresFiguras) {
             for (int i = 0; i < 2; i++) {
                 Tarjeta t = switch (tipoTarjeta) {
                     case "Figuras" -> new TarjetaFigura(nombre, "geometrica");
-                    case "Frutas" -> new TarjetaFruta(nombre, nombre.equals("naranja") || nombre.equals("limon"));
+                    default -> null;
+                };
+                lista.add(t);
+            }
+        }
+        
+        }
+        
+        if(tipoTarjeta.equals("Banderas"))
+        {
+            
+        for (String nombre : nombresBanderas) {
+            for (int i = 0; i < 2; i++) {
+                Tarjeta t = switch (tipoTarjeta) {
                     case "Banderas" -> new TarjetaBandera(nombre, "America");
                     default -> null;
                 };
                 lista.add(t);
             }
         }
+        
+        }
+        
+        if(tipoTarjeta.equals("Frutas"))
+        {
+            
+        for (String nombre : nombresFrutas) {
+            for (int i = 0; i < 2; i++) {
+                Tarjeta t = switch (tipoTarjeta) {
+                    case "Frutas" -> new TarjetaFruta(nombre, nombre.equals("kiwi") || nombre.equals("limon"));
+                    default -> null;
+                };
+                lista.add(t);
+            }
+        }
+        
+        }
+        
         return lista;
     }
     

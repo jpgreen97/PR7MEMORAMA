@@ -16,7 +16,6 @@ public class TarjetaFruta extends Tarjeta {
     @Override
     public Icon getImagen() {
   String ruta = "imagenes/frutas/" + getNombre() + ".png";
-    // Tamaño deseado (ej: 100x100 píxeles)
     return redimensionarImagen(ruta, 150, 150);    }
 
     public ImageIcon redimensionarImagen(String ruta, int ancho, int alto) {
@@ -25,7 +24,21 @@ public class TarjetaFruta extends Tarjeta {
             .getScaledInstance(ancho, alto, Image.SCALE_SMOOTH);
     return new ImageIcon(imagenRedimensionada);
 }
-    public String descripcionDetallada() {
-        return "Fruta: " + getNombre()+ (esCitrica ? " (cítrica)" : " (no cítrica)");
+
+    @Override
+    public String getInformacion() {
+         return "Fruta: " + nombre + "-" + 
+               (esCitrica ? "Es citrico" : "No es citrico");
     }
+
+    @Override
+    public void efectoEspecial(Jugador jugador) {
+        
+          if (esCitrica) {
+        jugador.sumarPunto(); 
+        JOptionPane.showMessageDialog(null, 
+            "Fruta citrica \n" + jugador.getNombre() + " gana 10 puntos extras.");
+    }
+    }
+
 }
