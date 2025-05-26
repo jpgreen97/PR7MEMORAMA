@@ -1,3 +1,4 @@
+import java.awt.Image;
 import javax.swing.*;
 
 public abstract class Tarjeta {
@@ -27,4 +28,11 @@ public abstract class Tarjeta {
     
     public abstract void efectoEspecial(Jugador jugador); 
 
+    protected static ImageIcon redimensionarImagen(String ruta, int ancho, int alto) {
+        ImageIcon iconoOriginal = new ImageIcon(ruta);
+        Image imagenRedimensionada = iconoOriginal.getImage()
+                .getScaledInstance(ancho, alto, Image.SCALE_SMOOTH);
+        return new ImageIcon(imagenRedimensionada);
+    }
+    
 }

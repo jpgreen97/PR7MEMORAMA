@@ -1,16 +1,20 @@
 import java.awt.Image;
+import java.util.Set;
 import javax.swing.*;
 
 public class TarjetaFruta extends Tarjeta {
-    private boolean esCitrica;
 
-    public TarjetaFruta(String nombre, boolean esCitrica) {
+    //Frutas citricas
+     private static final Set<String> FRUTAS_CITRICAS = Set.of(
+        "limon", "naranja"
+    );
+     
+    public TarjetaFruta(String nombre) {
         super(nombre);
-        this.esCitrica = esCitrica;
     }
 
     public boolean esCitrica() {
-        return esCitrica;
+        return FRUTAS_CITRICAS.contains(getNombre().toLowerCase());
     }
 
     @Override
@@ -18,27 +22,20 @@ public class TarjetaFruta extends Tarjeta {
   String ruta = "imagenes/frutas/" + getNombre() + ".png";
     return redimensionarImagen(ruta, 150, 150);    }
 
-    public ImageIcon redimensionarImagen(String ruta, int ancho, int alto) {
-    ImageIcon iconoOriginal = new ImageIcon(ruta);
-    Image imagenRedimensionada = iconoOriginal.getImage()
-            .getScaledInstance(ancho, alto, Image.SCALE_SMOOTH);
-    return new ImageIcon(imagenRedimensionada);
-}
 
     @Override
     public String getInformacion() {
          return "Fruta: " + nombre + "-" + 
-               (esCitrica ? "Es citrico" : "No es citrico");
+               (esCitrica() ? "Es citrico" : "No es citrico");//Condicion para saber si es citrico o no
     }
 
     @Override
     public void efectoEspecial(Jugador jugador) {
-        
-          if (esCitrica) {
-        jugador.sumarPunto(); 
-        JOptionPane.showMessageDialog(null, 
-            "Fruta citrica \n" + jugador.getNombre() + " gana 10 puntos extras.");
-    }
+        if (esCitrica()) {
+            jugador.sumarPuntos(10); // suma 10 puntos extra si es cítrica
+            JOptionPane.showMessageDialog(null,
+                "+10 puntos extras por ser una fruta citrica");
+        }
     }
 
 }

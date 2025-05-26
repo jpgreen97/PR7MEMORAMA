@@ -8,6 +8,8 @@
         private JComboBox<Integer> cantidadJugadoresCombo;
         private JButton botonIniciar;
 
+        //Atributo para el juego
+        private MemoramaJuego juego ;
 
         public MenuInicio() {
             setTitle("Memorama - Menu");
@@ -49,8 +51,10 @@
         private void iniciarJuego() {
             String tipoSeleccionado = (String) tipoTarjetaCombo.getSelectedItem();
             int numJugadores = (int) cantidadJugadoresCombo.getSelectedItem();
-            new MemoramaJuego(tipoSeleccionado, numJugadores).setVisible(true);
-            this.dispose();
+            juego =  new MemoramaJuego(tipoSeleccionado, numJugadores);
+            juego.setVisible(true);
+            
+            this.dispose();//El objeto acutal se cierra, es decir, la ventana del memorama se ceierra
         }
 
         public static void main(String[] args) {
